@@ -40,5 +40,3 @@ project/ ├── index.html ├── style.css ├── script.js ├── 
    ```bash
    git clone https://github.com/Abhishekgupta56/Finance_Calculator.git
 2. Open index.html in your browser.
-## 📁 Folder Structure
-
