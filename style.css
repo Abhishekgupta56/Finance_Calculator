@@ -1,0 +1,22 @@
+
+
+        .calculator-container {
+            display: none;
+        }
+        .calculator-container.active {
+            display: block;
+        }
+        #growthChart {
+            max-height: 300px;
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button:hover {
+            transform: translateY(-2px);
+        }
+        .tab-button.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+   

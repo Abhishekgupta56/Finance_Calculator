@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Finance Calculators</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body class="bg-gray-50">
+    <header class="bg-indigo-50 text-indigo-800 py-6 border-b border-indigo-100">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-3xl font-bold text-indigo-700">Finance Calculators</h1>
+                <nav class="hidden md:block">
+                    <ul class="flex space-x-6">
+                        <li><a href="#" class="hover:text-indigo-600 transition">Home</a></li>
+                        <li><a href="#" class="hover:text-indigo-600 transition">About</a></li>
+                        <li><a href="#" class="hover:text-indigo-600 transition">Resources</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6">Financial Calculators</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+                <button onclick="showCalculator('sip')" class="tab-button bg-blue-100 text-blue-800 py-3 px-4 rounded-lg border border-blue-200 shadow-sm active">
+                    SIP Calculator
+                </button>
+                <button onclick="showCalculator('mutual-fund')" class="tab-button bg-green-100 text-green-800 py-3 px-4 rounded-lg border border-green-200 shadow-sm">
+                    Mutual Fund Returns
+                </button>
+                <button onclick="showCalculator('capital-gains')" class="tab-button bg-purple-100 text-purple-800 py-3 px-4 rounded-lg border border-purple-200 shadow-sm">
+                    Capital Gains
+                </button>
+                <button onclick="showCalculator('emi')" class="tab-button bg-yellow-100 text-yellow-800 py-3 px-4 rounded-lg border border-yellow-200 shadow-sm">
+                    EMI Calculator
+                </button>
+                <button onclick="showCalculator('fd')" class="tab-button bg-red-100 text-red-800 py-3 px-4 rounded-lg border border-red-200 shadow-sm">
+                    FD Calculator
+                </button>
+                <button onclick="showCalculator('real-estate')" class="tab-button bg-indigo-100 text-indigo-800 py-3 px-4 rounded-lg border border-indigo-200 shadow-sm">
+                    Real Estate
+                </button>
+                <button onclick="showCalculator('retirement')" class="tab-button bg-pink-100 text-pink-800 py-3 px-4 rounded-lg border border-pink-200 shadow-sm">
+                    Retirement Planning
+                </button>
+                <button onclick="showCalculator('loan-compare')" class="tab-button bg-gray-100 text-gray-800 py-3 px-4 rounded-lg border border-gray-200 shadow-sm">
+                    Loan Comparison
+                </button>
+            </div>
+
+            <!-- SIP Calculator -->
+            <div id="sip-calculator" class="calculator-container active">
+                <h3 class="text-xl font-semibold mb-4">SIP Calculator</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Monthly Investment (₹)</label>
+                            <input type="number" id="sip-amount" class="w-full p-2 border border-gray-300 rounded" value="5000">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Expected Return Rate (% p.a.)</label>
+                            <input type="number" id="sip-return" class="w-full p-2 border border-gray-300 rounded" value="12">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Investment Period (years)</label>
+                            <input type="number" id="sip-period" class="w-full p-2 border border-gray-300 rounded" value="5">
+                        </div>
+                        <button onclick="calculateSIP()" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">Calculate</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h4 class="font-medium text-lg mb-4">Results</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span>Invested Amount:</span>
+                                <span id="sip-invested" class="font-medium">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Est. Returns:</span>
+                                <span id="sip-est-returns" class="font-medium">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Total Value:</span>
+                                <span id="sip-total-value" class="font-medium text-blue-600">₹0</span>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <canvas id="sipChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mutual Fund Calculator -->
+            <div id="mutual-fund-calculator" class="calculator-container">
+                <h3 class="text-xl font-semibold mb-4">Mutual Fund Returns Calculator</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Lump Sum Investment (₹)</label>
+                            <input type="number" id="mf-amount" class="w-full p-2 border border-gray-300 rounded" value="10000">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Expected Annual Return (%)</label>
+                            <input type="number" id="mf-return" class="w-full p-2 border border-gray-300 rounded" value="10">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Investment Period (years)</label>
+                            <input type="number" id="mf-period" class="w-full p-2 border border-gray-300 rounded" value="10">
+                        </div>
+                        <button onclick="calculateMF()" class="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition">Calculate</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h4 class="font-medium text-lg mb-4">Results</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span>Invested Amount:</span>
+                                <span id="mf-invested" class="font-medium">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Est. Returns:</span>
+                                <span id="mf-est-returns" class="font-medium">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Total Value:</span>
+                                <span id="mf-total-value" class="font-medium text-green-600">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>CAGR:</span>
+                                <span id="mf-cagr" class="font-medium">0%</span>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <canvas id="mfChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Capital Gains Calculator -->
+            <div id="capital-gains-calculator" class="calculator-container">
+                <h3 class="text-xl font-semibold mb-4">Capital Gains Calculator</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Purchase Price (₹)</label>
+                            <input type="number" id="cg-purchase" class="w-full p-2 border border-gray-300 rounded" value="50000">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Sale Price (₹)</label>
+                            <input type="number" id="cg-sale" class="w-full p-2 border border-gray-300 rounded" value="75000">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Holding Period (years)</label>
+                            <input type="number" id="cg-period" class="w-full p-2 border border-gray-300 rounded" value="3">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Asset Type</label>
+                            <select id="cg-type" class="w-full p-2 border border-gray-300 rounded">
+                                <option value="equity">Equity (Stocks, Mutual Funds)</option>
+                                <option value="debt">Debt (Bonds, FD)</option>
+                                <option value="property">Real Estate</option>
+                            </select>
+                        </div>
+                        <button onclick="calculateCG()" class="w-full bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition">Calculate Tax</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h4 class="font-medium text-lg mb-4">Capital Gains Analysis</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span>Capital Gain:</span>
+                                <span id="cg-amount" class="font-medium">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Tax Rate:</span>
+                                <span id="cg-tax-rate" class="font-medium">0%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Tax Amount:</span>
+                                <span id="cg-tax-amount" class="font-medium text-purple-600">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Net Proceeds:</span>
+                                <span id="cg-net" class="font-medium">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EMI Calculator -->
+            <div id="emi-calculator" class="calculator-container">
+                <h3 class="text-xl font-semibold mb-4">EMI Calculator</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Loan Amount (₹)</label>
+                            <input type="number" id="emi-amount" class="w-full p-2 border border-gray-300 rounded" value="500000">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Interest Rate (% p.a.)</label>
+                            <input type="number" id="emi-rate" class="w-full p-2 border border-gray-300 rounded" value="8.5">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Loan Tenure (years)</label>
+                            <input type="number" id="emi-tenure" class="w-full p-2 border border-gray-300 rounded" value="5">
+                        </div>
+                        <button onclick="calculateEMI()" class="w-full bg-yellow-600 text-white py-2 px-4 rounded hover:bg-yellow-700 transition">Calculate EMI</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h4 class="font-medium text-lg mb-4">EMI Schedule</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span>Monthly EMI:</span>
+                                <span id="emi-monthly" class="font-medium text-yellow-600">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Total Interest:</span>
+                                <span id="emi-total-interest" class="font-medium">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Total Payment:</span>
+                                <span id="emi-total-payment" class="font-medium">₹0</span>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <canvas id="emiChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FD Calculator -->
+            <div id="fd-calculator" class="calculator-container">
+                <h3 class="text-xl font-semibold mb-4">Fixed Deposit Calculator</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Deposit Amount (₹)</label>
+                            <input type="number" id="fd-amount" class="w-full p-2 border border-gray-300 rounded" value="100000">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Interest Rate (% p.a.)</label>
+                            <input type="number" id="fd-rate" class="w-full p-2 border border-gray-300 rounded" value="6.5">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tenure (years)</label>
+                            <input type="number" id="fd-tenure" class="w-full p-2 border border-gray-300 rounded" value="3">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Interest Payout</label>
+                            <select id="fd-payout" class="w-full p-2 border border-gray-300 rounded">
+                                <option value="compound">Compounded Quarterly</option>
+                                <option value="simple">Simple Interest</option>
+                                <option value="monthly">Monthly Payout</option>
+                            </select>
+                        </div>
+                        <button onclick="calculateFD()" class="w-full bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition">Calculate Maturity</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h4 class="font-medium text-lg mb-4">FD Maturity Details</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span>Principal Amount:</span>
+                                <span id="fd-principal" class="font-medium">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Interest Earned:</span>
+                                <span id="fd-interest" class="font-medium">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Maturity Amount:</span>
+                                <span id="fd-maturity" class="font-medium text-red-600">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Effective Annual Rate:</span>
+                                <span id="fd-ear" class="font-medium">0%</span>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <canvas id="fdChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real Estate Calculator -->
+            <div id="real-estate-calculator" class="calculator-container">
+                <h3 class="text-xl font-semibold mb-4">Real Estate Investment Calculator</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Property Price (₹)</label>
+                            <input type="number" id="re-price" class="w-full p-2 border border-gray-300 rounded" value="5000000">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Down Payment (%)</label>
+                            <input type="number" id="re-down" class="w-full p-2 border border-gray-300 rounded" value="20">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Loan Interest Rate (%)</label>
+                            <input type="number" id="re-rate" class="w-full p-2 border border-gray-300 rounded" value="7.5">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Loan Term (years)</label>
+                            <input type="number" id="re-term" class="w-full p-2 border border-gray-300 rounded" value="20">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Annual Property Tax (₹)</label>
+                            <input type="number" id="re-tax" class="w-full p-2 border border-gray-300 rounded" value="12000">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Annual Maintenance (₹)</label>
+                            <input type="number" id="re-maintenance" class="w-full p-2 border border-gray-300 rounded" value="10000">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Expected Annual Appreciation (%)</label>
+                            <input type="number" id="re-appreciation" class="w-full p-2 border border-gray-300 rounded" value="5">
+                        </div>
+                        <button onclick="calculateRealEstate()" class="w-full bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition">Calculate ROI</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h4 class="font-medium text-lg mb-4">Property Investment Analysis</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span>Down Payment:</span>
+                                <span id="re-down-amount" class="font-medium">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Loan Amount:</span>
+                                <span id="re-loan" class="font-medium">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Monthly EMI:</span>
+                                <span id="re-emi" class="font-medium">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Total Interest:</span>
+                                <span id="re-total-interest" class="font-medium">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Total Payments (Principal + Interest):</span>
+                                <span id="re-total-payment" class="font-medium">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Projected Property Value:</span>
+                                <span id="re-future-value" class="font-medium text-indigo-600">₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Net Profit:</span>
+                                <span id="re-profit" class="font-medium">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Financial Insights</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-medium text-lg mb-2">Understanding SIP</h3>
+                    <p class="text-sm text-gray-700">Systematic Investment Plans allow you to invest small amounts regularly, benefiting from rupee cost averaging and compounding over time.</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-medium text-lg mb-2">Capital Gains Tax</h3>
+                    <p class="text-sm text-gray-700">Short-term capital gains (held less than specified period) are typically taxed higher than long-term gains. Rates vary by asset class.</p>
+                </div>
+                <div class="bg-yellow-50 p-4 rounded-lg">
+                    <h3 class="font-medium text-lg mb-2">EMI Breakdown</h3>
+                    <p class="text-sm text-gray-700">Your EMI is comprised of principal repayment and interest. Early in the loan term, most of the payment goes toward interest.</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-medium text-lg mb-2">FD Interest Rates</h3>
+                    <p class="text-sm text-gray-700">Compounding frequency affects your FD returns. Quarterly compounding typically yields higher returns than annual compounding.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2">Disclaimer: These calculators are for illustrative purposes only. Actual returns may vary.</p>
+            <p>© 2023 Finance Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+</html>
+
